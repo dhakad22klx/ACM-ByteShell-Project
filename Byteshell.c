@@ -70,10 +70,14 @@ int my_help(char **prms)
 
 int my_cd(char **prms)
 {
-  if (prms[1] == NULL) {
+  if (prms[1] == NULL) 
+  {
     fprintf(stderr, "my: expected argument to \"cd\"\n");
-  } else {
-    if (chdir(prms[1]) != 0) {
+  } 
+  else 
+  {
+    if(chdir(prms[1]) != 0) 
+    {
       perror("my");
     }
   }
@@ -88,7 +92,7 @@ int my_cd(char **prms)
 
 int my_mapfile(char **prms)
 {
-    char* filename = prms[3];
+    char* filename = prms[1];
     // printf("%s\n",filename);
     //FILE macro to declare the file pointer variable. 
     FILE* file = fopen(filename, "r"); 
@@ -99,9 +103,11 @@ int my_mapfile(char **prms)
         printf("Error opening file: %s\n", filename);
         return 1;
     }
+
     char* whole_strs[MAX_whole_strS];
     int whole_strCount = 0;
     char whole_str[MAX_whole_str_LENGTH];
+
     while (fgets(whole_str, sizeof(whole_str), file) != NULL)
     {
         if (whole_strCount >= MAX_whole_strS) {
@@ -116,9 +122,13 @@ int my_mapfile(char **prms)
         whole_strs[whole_strCount] = strdup(whole_str);//to create duplicate
         whole_strCount++;
     }
+
     fclose(file);//to close respective file.
+
     printf("%d\n",whole_strCount);
-    for (int i = 0; i < whole_strCount; i++) {
+
+    for (int i = 0; i < whole_strCount; i++) 
+    {
         printf("%s\n", whole_strs[i]);
         free(whole_strs[i]);
     }
@@ -229,28 +239,37 @@ int my_exit(char **prms)
 int my_launch(char **prms)
 {
   pid_t pid;//data type representing a process ID
+
   int status;
+
   pid = fork();//fork()-->system call to create new process
 
   if (pid == 0) 
   {
     // Child process
     if (execvp(prms[0], prms) == -1) 
-    {   //perror() function displays the description of the error 
+    {
+        //perror() function displays the description of the error 
         //that corresponds to the error code stored in the system variable errno.
         perror("Eroor:");
     }
     exit(EXIT_FAILURE);
-  } else if (pid < 0) {
+  } 
+  else if (pid < 0) 
+  {
     // Error forking
     perror("Error in creating process");
-  } else {
+  } 
+  else 
+  {
     // Parent process
     do
     {
-      waitpid(pid, &status, WUNTRACED);//Wait for a specific child process to end
+      waitpid(pid, &status, WUNTRACED);
+      //Wait for a specific child process to end
       //waitpid() suspends the calling process until the system gets status information on the child
-    } while (!WIFEXITED(status) && !WIFSIGNALED(status));
+    } 
+    while (!WIFEXITED(status) && !WIFSIGNALED(status));
   }
   return 1;
 }
