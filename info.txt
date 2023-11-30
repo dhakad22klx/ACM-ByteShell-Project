@@ -1,0 +1,36 @@
+The execvp function is a Unix system call that is used to execute a program. It is part of the exec family of functions in Unix-like operating systems, and its primary purpose is to replace the current process image with a new one.
+
+Here's a brief overview of how execvp works:
+
+Loading a New Program:
+
+The execvp function takes the name of a program to execute and an array of pointers to null-terminated strings that represent the program's arguments.
+Searching for the Program:
+
+The system searches for the program in the directories listed in the PATH environment variable. If it finds the executable, it loads it into the current process.
+Replacing the Current Process:
+
+Once the new program is located, the current process's memory space is replaced with the new program's code and data. This means that the new program takes over the execution of the current process.
+Passing Arguments:
+
+The arguments for the new program are passed as an array of strings. The first element in the array is conventionally the name of the program itself.
+Environment Variables:
+
+The new program inherits the environment variables from the calling process.
+
+
+
+
+
+int (*builtin_func[]) (char **) = {
+  &my_help,
+  &my_cd,
+  &my_mapfile,
+  &my_echo,
+  &my_history,
+  &my_exit
+};
+
+The provided code declares an array of function pointers named builtin_func. 
+Each element of this array is expected to be a function that takes a char** argument and returns an int. 
+However, the array is initialized to an empty set of braces {}

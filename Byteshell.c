@@ -36,6 +36,11 @@ char *builtin_str[] = {
   "exit",
 };
 
+
+//The provided code declares an array of function pointers named builtin_func. 
+//Each element of this array is expected to be a function that takes a char** argument and returns an int.
+// However, the array is initialized to an empty set of braces {}
+
 int (*builtin_func[]) (char **) = {
   &my_help,
   &my_cd,
@@ -182,7 +187,8 @@ int my_echo(char **prms)
             }
             if (echo_string[i] == '\\') 
             {
-                switch (echo_string[i + 1]) {
+                switch (echo_string[i + 1]) 
+                {
                     case 'n': printf("\n"); break;
                     case 't': printf("\t"); break;
                     case 'r': printf("\r"); break;
@@ -222,6 +228,7 @@ int my_history(char **prms)
     return 1;
 }
 //exit --> to terminate our program
+
 int my_exit(char **prms)
 {
     for (int i = 0; i < total; i++)
@@ -236,6 +243,7 @@ int my_exit(char **prms)
 //Basic loop of shell - 1.read a whole_str 2.parse a whole_str(split to command and arguments) 3. execute 
 
 //launch() function
+
 int my_launch(char **prms)
 {
   pid_t pid;//data type representing a process ID
@@ -265,9 +273,9 @@ int my_launch(char **prms)
     // Parent process
     do
     {
-      waitpid(pid, &status, WUNTRACED);
-      //Wait for a specific child process to end
-      //waitpid() suspends the calling process until the system gets status information on the child
+        waitpid(pid, &status, WUNTRACED);
+        //Wait for a specific child process to end
+        //waitpid() suspends the calling process until the system gets status information on the child
     } 
     while (!WIFEXITED(status) && !WIFSIGNALED(status));
   }
